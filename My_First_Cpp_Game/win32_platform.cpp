@@ -2,6 +2,15 @@
 
 bool running = true;
 
+struct Render_State {
+	int height, width;
+	void* memory;
+
+	BITMAPINFO bitmapinfo;
+};
+
+Render_State render_state;
+
 LRESULT CALLBACK window_callback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 {
 	LRESULT result = 0;
@@ -9,12 +18,33 @@ LRESULT CALLBACK window_callback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 	switch (uMsg)
 	{
 		case WM_CLOSE:
-		case WM_DESTROY:
+		case WM_DESTROY: {
 			running = false;
-			break;
-		default:
+		}break;
+
+		case WM_SIZE: {
+			RECT rect;
+			GetClientRect(hwnd, &rect);
+			render_state.width = rect.right - rect.left;
+			render_state.height = rect.bottom - rect.top;
+
+			int size = render_state.width * render_state.height * sizeof(unsigned int);
+
+			if (render_state.memory) VirtualFree(render_state.memory, 0, MEM_RELEASE);
+			render_state.memory = VirtualAlloc(0, size, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
+
+			render_state.bitmapinfo.bmiHeader.biSize = sizeof(render_state.bitmapinfo.bmiHeader);
+			render_state.bitmapinfo.bmiHeader.biWidth = render_state.width;
+			render_state.bitmapinfo.bmiHeader.biHeight = render_state.height;
+			render_state.bitmapinfo.bmiHeader.biPlanes = 1;
+			render_state.bitmapinfo.bmiHeader.biBitCount = 32;
+			render_state.bitmapinfo.bmiHeader.biCompression = BI_RGB;
+
+		}break;
+
+		default: {
 			result = DefWindowProc(hwnd, uMsg, wParam, lParam);
-			break;
+		}break;
 	}
 
 	return result;
@@ -46,6 +76,8 @@ int WinMain(
 		hInstance,
 		0);
 
+	HDC hdc = GetDC(window);
+
 	while (running) 
 	{
 		MSG message;
@@ -55,5 +87,16 @@ int WinMain(
 			TranslateMessage(&message);
 			DispatchMessage(&message);
 		}
+
+		unsigned int* pixel = (unsigned int*)render_state.memory;
+		for (int y = 0; y < render_state.height; y++)
+		{
+			for (int x = 0; x < render_state.width; x++)
+			{
+				*pixel++ = x*y;
+			}
+		}
+
+		StretchDIBits(hdc, 0, 0, render_state.width, render_state.height, 0, 0, render_state.width, render_state.height, render_state.memory, &render_state.bitmapinfo, DIB_RGB_COLORS, SRCCOPY);
 	}
 } 
