@@ -1,0 +1,21 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/x64/Debug/My_First_Cpp_Game.exe
+/x64/Debug/My_First_Cpp_Game.pdb
+/My_First_Cpp_Game/x64/Debug/My_First.d63f0239.tlog/CL.command.1.tlog
+/My_First_Cpp_Game/x64/Debug/My_First.d63f0239.tlog/Cl.items.tlog
+/My_First_Cpp_Game/x64/Debug/My_First.d63f0239.tlog/CL.read.1.tlog
+/My_First_Cpp_Game/x64/Debug/My_First.d63f0239.tlog/CL.write.1.tlog
+/My_First_Cpp_Game/x64/Debug/My_First.d63f0239.tlog/link.command.1.tlog
+/My_First_Cpp_Game/x64/Debug/My_First.d63f0239.tlog/link.read.1.tlog
+/My_First_Cpp_Game/x64/Debug/My_First.d63f0239.tlog/link.write.1.tlog
+/My_First_Cpp_Game/x64/Debug/My_First.d63f0239.tlog/My_First_Cpp_Game.lastbuildstate
+/My_First_Cpp_Game/x64/Debug/My_First_Cpp_Game.Build.CppClean.log
+/My_First_Cpp_Game/x64/Debug/My_First_Cpp_Game.exe.recipe
+/My_First_Cpp_Game/x64/Debug/My_First_Cpp_Game.ilk
+/My_First_Cpp_Game/x64/Debug/My_First_Cpp_Game.log
+/My_First_Cpp_Game/x64/Debug/vc143.idb
+/My_First_Cpp_Game/x64/Debug/vc143.pdb
+/My_First_Cpp_Game/x64/Debug/win32_platform.obj
