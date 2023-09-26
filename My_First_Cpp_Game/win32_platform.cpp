@@ -1,6 +1,7 @@
 #include <windows.h>
+#include "utility.cpp"
 
-bool running = true;
+global_variable bool running = true;
 
 struct Render_State {
 	int height, width;
@@ -9,7 +10,9 @@ struct Render_State {
 	BITMAPINFO bitmapinfo;
 };
 
-Render_State render_state;
+global_variable Render_State render_state;
+
+#include "renderer.cpp"
 
 LRESULT CALLBACK window_callback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 {
@@ -88,14 +91,10 @@ int WinMain(
 			DispatchMessage(&message);
 		}
 
-		unsigned int* pixel = (unsigned int*)render_state.memory;
-		for (int y = 0; y < render_state.height; y++)
-		{
-			for (int x = 0; x < render_state.width; x++)
-			{
-				*pixel++ = x*y;
-			}
-		}
+		clear_screen(0xff5500);
+		draw_rect(0, 0, 1, 1, 0x2E8B57);
+		draw_rect(30, 30, 5, 5, 0x008f39);
+		draw_rect(-20, 20, 8, 3, 0x32CD32);
 
 		StretchDIBits(hdc, 0, 0, render_state.width, render_state.height, 0, 0, render_state.width, render_state.height, render_state.memory, &render_state.bitmapinfo, DIB_RGB_COLORS, SRCCOPY);
 	}
