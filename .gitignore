@@ -24,3 +24,6 @@
 /.vs/My_First_Cpp_Game/v17/Browse.VC.db-shm
 /.vs/My_First_Cpp_Game/v17/Browse.VC.db-wal
 /.vs/My_First_Cpp_Game/v17/Browse.VC.opendb
+*.vsidx
+*.ipch
+*.obj
